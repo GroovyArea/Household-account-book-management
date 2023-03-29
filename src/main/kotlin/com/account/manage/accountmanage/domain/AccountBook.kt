@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-class RemoveInfo(
+class AccountBook(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,9 +14,15 @@ class RemoveInfo(
     @JoinColumn(name = "user_id")
     val user: User,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_book_id")
-    val accountBook: AccountBook,
+    @Embedded
+    var accountInfo: AccountInfo,
 
-    val deletedAt: LocalDateTime,
-) : TimeEntity()
+    @Enumerated(EnumType.STRING)
+    val accountType: AccountType,
+
+    @Enumerated(EnumType.STRING)
+    val accountStatus: AccountStatus = AccountStatus.VALID,
+
+    val deletedAt: LocalDateTime? = null
+) : TimeEntity() {
+}
