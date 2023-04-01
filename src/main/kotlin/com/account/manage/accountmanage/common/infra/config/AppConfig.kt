@@ -1,7 +1,7 @@
 package com.account.manage.accountmanage.common.infra.config
 
 import com.account.manage.accountmanage.adapter.`in`.filter.AuthenticationFilter
-import com.account.manage.accountmanage.adapter.`in`.filter.LoginFilter
+import com.account.manage.accountmanage.user.adapter.`in`.filter.LoginFilter
 import com.account.manage.accountmanage.common.adpater.out.error.ErrorHandlingFilter
 import com.account.manage.accountmanage.user.adapter.out.persistence.UserRepository
 import com.account.manage.accountmanage.common.infra.auth.JwtProvider

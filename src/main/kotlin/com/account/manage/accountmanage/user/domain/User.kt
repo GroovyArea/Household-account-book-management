@@ -15,10 +15,14 @@ class User(
     val email: String,
 
     @Column(nullable = false)
-    val password: String,
+    var password: String,
 
     @Column(nullable = false)
-    val passwordSalt: String,
+    var passwordSalt: String = "",
 ) : TimeEntity() {
 
+    fun updatePasswordInfo(securedPassword: String, newSalt: String) {
+        this.password = securedPassword
+        this.passwordSalt = newSalt
+    }
 }

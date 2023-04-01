@@ -18,7 +18,8 @@ enum class UserErrorType(
 ) : ErrorType {
 
     NOT_FOUND_USER(10000, "Not found user."),
-    AUTHENTICATION_FAILED(10001, "Authentication failed."), ;
+    AUTHENTICATION_FAILED(10001, "Authentication failed."),
+    USER_ALREADY_EXISTS(10002, "User already exists.");
 
     override fun getErrorCode() = this.code
 

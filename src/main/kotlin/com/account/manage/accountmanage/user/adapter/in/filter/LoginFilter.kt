@@ -1,4 +1,4 @@
-package com.account.manage.accountmanage.adapter.`in`.filter
+package com.account.manage.accountmanage.user.adapter.`in`.filter
 
 import com.account.manage.accountmanage.common.adpater.out.error.DataNotFoundException
 import com.account.manage.accountmanage.common.adpater.out.error.UnAuthorizedException
