@@ -2,6 +2,8 @@ package com.account.manage.accountmanage.accountbook.model
 
 import com.account.manage.accountmanage.accountbook.domain.AccountType
 import com.account.manage.accountmanage.accountbook.domain.vo.AccountInfo
+import com.account.manage.accountmanage.user.domain.User
+import org.springframework.data.domain.Pageable
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
@@ -46,3 +48,8 @@ data class AccountUpdateDto(
         )
     }
 }
+
+data class AccountBooksDto(
+    val user: User,
+    val pageable: Pageable,
+) : AccountBookRequest
