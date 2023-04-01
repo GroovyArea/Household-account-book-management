@@ -45,4 +45,8 @@ class AccountBook(
         this.deletedAt = LocalDateTime.now(ZoneId.of("Asia/Seoul"))
         this.accountStatus = AccountStatus.REMOVED
     }
+
+    fun recoverAccountInfo() {
+        this.accountStatus = AccountStatus.VALID
+    }
 }

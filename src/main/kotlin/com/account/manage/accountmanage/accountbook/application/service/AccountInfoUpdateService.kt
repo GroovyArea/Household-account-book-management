@@ -1,4 +1,4 @@
-package com.account.manage.accountmanage.accountbook.application.port.out
+package com.account.manage.accountmanage.accountbook.application.service
 
 import com.account.manage.accountmanage.accountbook.adapter.out.error.AccountBookErrorType
 import com.account.manage.accountmanage.accountbook.adapter.out.persistence.AccountBookRepository
