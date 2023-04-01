@@ -25,3 +25,10 @@ data class AccountDeleteCompletionDto(
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     val deletedTime: LocalDateTime,
 ) : AccountBookResponse
+
+data class AccountRecoverCompletionDto(
+    val accountBookId: Long,
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    val updatedTime: LocalDateTime,
+) : AccountBookResponse
