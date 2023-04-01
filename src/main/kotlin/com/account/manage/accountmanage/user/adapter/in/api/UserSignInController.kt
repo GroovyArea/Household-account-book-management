@@ -29,7 +29,7 @@ class UserSignInController(
         val refreshTokenCookieValue = joinCompletionDto.refreshTokenCookieValue
 
         response.addHeader("Authorization", "Bearer $accessToken")
-        response.addHeader("auth-cookie", refreshTokenCookieValue)
+        response.addHeader("set-cookie", refreshTokenCookieValue)
 
     }
 }

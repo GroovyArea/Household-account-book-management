@@ -3,18 +3,24 @@ package com.account.manage.accountmanage.user.adapter.`in`.filter
 import com.account.manage.accountmanage.common.adpater.out.error.DataNotFoundException
 import com.account.manage.accountmanage.common.adpater.out.error.UnAuthorizedException
 import com.account.manage.accountmanage.common.adpater.out.error.UserErrorType
+import com.account.manage.accountmanage.common.infra.auth.CookieCreator
+import com.account.manage.accountmanage.common.infra.auth.JwtProvider
 import com.account.manage.accountmanage.user.adapter.out.persistence.UserRepository
 import com.account.manage.accountmanage.common.infra.auth.LoginObject
 import com.account.manage.accountmanage.common.infra.auth.PasswordEncrypt
+import com.account.manage.accountmanage.user.domain.User
 import com.fasterxml.jackson.databind.ObjectMapper
 import java.io.IOException
 import javax.servlet.*
 import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 
 class LoginFilter(
     private val userRepository: UserRepository,
     private val objectMapper: ObjectMapper,
+    private val jwtProvider: JwtProvider,
+    private val cookieCreator: CookieCreator,
 ) : Filter {
 
     override fun init(filterConfig: FilterConfig) {
@@ -32,9 +38,9 @@ class LoginFilter(
             throw UnAuthorizedException(UserErrorType.AUTHENTICATION_FAILED)
         }
 
-        authenticate(parsedLoginObject)
-
-        chain.doFilter(request, response)
+        val user = authenticate(parsedLoginObject)
+        addTokenToHeader(response, user)
+        return
     }
 
     override fun destroy() {
@@ -49,7 +55,7 @@ class LoginFilter(
         )
     }
 
-    private fun authenticate(loginObject: LoginObject) {
+    private fun authenticate(loginObject: LoginObject): User {
         val user = (userRepository.findUserByEmail(loginObject.email)
             ?: throw DataNotFoundException(UserErrorType.NOT_FOUND_USER))
 
@@ -61,5 +67,21 @@ class LoginFilter(
             throw UnAuthorizedException(UserErrorType.AUTHENTICATION_FAILED)
         }
 
+        return user
     }
+
+    private fun addTokenToHeader(
+        response: ServletResponse,
+        user: User
+    ) {
+        val httpServletResponse = response as HttpServletResponse
+
+        val accessToken = jwtProvider.generateAccessToken(user.id)
+        val refreshToken = jwtProvider.generateRefreshToken(user.id)
+
+        httpServletResponse.addHeader("Authorization", "Bearer $accessToken")
+        httpServletResponse.addHeader("set-cookie", cookieCreator.createRefreshCookie(refreshToken).toString())
+    }
+
+
 }
