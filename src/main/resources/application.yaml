@@ -12,11 +12,15 @@ spring:
         dialect: org.hibernate.dialect.MySQL57Dialect
         show_sql: true
         format_sql: true
-
   jwt:
     access-secret-key: wearepayhereeverywhere
     refresh-secret-key: becomeonedaythegreatest
     access-expiration: 3600000
     refresh-expiration: 2419200000
+
+  cookie:
+    env-domain: localhost
+    same-site: None
+
 server:
   port: 8080
