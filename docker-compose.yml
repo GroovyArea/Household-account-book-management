@@ -1,0 +1,22 @@
+version: '3'
+services:
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.mysql
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306"
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.spring
+    container_name: app
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db

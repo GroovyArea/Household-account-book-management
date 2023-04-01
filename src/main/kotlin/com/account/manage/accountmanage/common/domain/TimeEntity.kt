@@ -1,4 +1,4 @@
-package com.account.manage.accountmanage.domain
+package com.account.manage.accountmanage.common.domain
 
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
