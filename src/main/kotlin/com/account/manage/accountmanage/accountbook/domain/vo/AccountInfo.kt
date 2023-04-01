@@ -1,4 +1,4 @@
-package com.account.manage.accountmanage.domain
+package com.account.manage.accountmanage.accountbook.domain.vo
 
 import javax.persistence.Embeddable
 

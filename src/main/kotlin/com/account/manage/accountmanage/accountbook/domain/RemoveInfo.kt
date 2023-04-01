@@ -1,5 +1,7 @@
-package com.account.manage.accountmanage.domain
+package com.account.manage.accountmanage.accountbook.domain
 
+import com.account.manage.accountmanage.common.domain.TimeEntity
+import com.account.manage.accountmanage.user.domain.User
 import java.time.LocalDateTime
 import javax.persistence.*
 

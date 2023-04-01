@@ -1,5 +1,6 @@
-package com.account.manage.accountmanage.domain
+package com.account.manage.accountmanage.user.domain
 
+import com.account.manage.accountmanage.common.domain.TimeEntity
 import javax.persistence.*
 
 @Table(name = "users")
@@ -15,6 +16,9 @@ class User(
 
     @Column(nullable = false)
     val password: String,
+
+    @Column(nullable = false)
+    val passwordSalt: String,
 ) : TimeEntity() {
 
 }
