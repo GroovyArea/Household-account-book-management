@@ -6,6 +6,8 @@ import com.account.manage.accountmanage.accountbook.application.port.`in`.Accoun
 import com.account.manage.accountmanage.accountbook.model.*
 import com.account.manage.accountmanage.accountbook.model.AccountBooksInfoDto.Companion.toAccountBooksInfoDto
 import com.account.manage.accountmanage.common.adpater.out.error.DataNotFoundException
+import com.account.manage.accountmanage.common.infra.auth.UserExtractor
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -13,12 +15,19 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class AccountInfoService(
     private val accountBookRepository: AccountBookRepository,
+    private val permissionCheckService: PermissionCheckService,
 ) : AccountInfoUseCase {
 
     @Transactional(readOnly = true)
-    override fun getAccountInfo(accountBookId: Long): AccountBookResponse {
+    override fun getAccountInfo(accountBookRequest: AccountBookRequest): AccountBookResponse {
+        val accountBookDetailDto = accountBookRequest as AccountBookDetailDto
+        val user = accountBookDetailDto.user
+        val accountBookId = accountBookDetailDto.accountBookId
+
         val accountBook = (accountBookRepository.findAccountBookById(accountBookId)
             ?: throw DataNotFoundException(AccountBookErrorType.NOT_FOUND_ACCOUNT_BOOK))
+
+        permissionCheckService.checkAccountBookPermission(user, accountBook)
 
         return AccountDetailInfoDto(
             ownerEmail = accountBook.user.email,

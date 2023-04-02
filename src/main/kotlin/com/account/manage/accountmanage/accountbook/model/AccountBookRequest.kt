@@ -49,7 +49,17 @@ data class AccountUpdateDto(
     }
 }
 
+data class AccountBookDetailDto(
+    val user: User,
+    val accountBookId: Long,
+) : AccountBookRequest
+
 data class AccountBooksDto(
     val user: User,
     val pageable: Pageable,
+) : AccountBookRequest
+
+data class AccountRecoverDto(
+    val user: User,
+    val accountBookId: Long,
 ) : AccountBookRequest
