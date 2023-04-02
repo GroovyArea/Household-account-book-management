@@ -1,6 +1,7 @@
 package com.account.manage.accountmanage.accountbook.adapter.`in`
 
 import com.account.manage.accountmanage.accountbook.application.port.`in`.AccountInfoUseCase
+import com.account.manage.accountmanage.accountbook.model.AccountBookDetailDto
 import com.account.manage.accountmanage.accountbook.model.AccountBookResponse
 import com.account.manage.accountmanage.accountbook.model.AccountBooksDto
 import com.account.manage.accountmanage.common.infra.auth.UserExtractor
@@ -25,21 +26,26 @@ class AccountInfoController(
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{account-book-id}")
     fun getAccount(
-        @PathVariable(value = "account-book-id") accountBookId: Long
+        @PathVariable(value = "account-book-id") accountBookId: Long,
+        request: HttpServletRequest,
     ): AccountBookResponse {
-        return accountInfoUseCase.getAccountInfo(accountBookId)
+        return accountInfoUseCase.getAccountInfo(
+            AccountBookDetailDto(
+                user = userExtractor.getUserFromRequest(request),
+                accountBookId = accountBookId
+            )
+        )
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     fun getAccountBooks(
+        @PageableDefault(page = 0, sort = arrayOf("updatedAt"), direction = Sort.Direction.DESC) pageable: Pageable,
         request: HttpServletRequest,
-        @PageableDefault(page = 0, sort = arrayOf("updatedAt"), direction = Sort.Direction.DESC) pageable: Pageable
     ): AccountBookResponse {
-        val user = userExtractor.getUserFromRequest(request)
         return accountInfoUseCase.getAccountBookList(
             AccountBooksDto(
-                user = user,
+                user = userExtractor.getUserFromRequest(request),
                 pageable = pageable
             )
         )

@@ -49,4 +49,5 @@ class AccountBook(
     fun recoverAccountInfo() {
         this.accountStatus = AccountStatus.VALID
     }
+
 }

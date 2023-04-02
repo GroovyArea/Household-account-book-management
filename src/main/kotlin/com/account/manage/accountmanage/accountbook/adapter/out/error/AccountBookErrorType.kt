@@ -7,8 +7,8 @@ enum class AccountBookErrorType(
     private val message: String,
 ) : ErrorType {
 
-    NOT_FOUND_ACCOUNT_BOOK(20000, "Not found account book."),;
-
+    NOT_FOUND_ACCOUNT_BOOK(20000, "Not found account book."),
+    NOT_OWNER_OF_ACCOUNT_BOOK(20001, "Not owner of account book."),;
 
     override fun getErrorCode() = this.code
 
