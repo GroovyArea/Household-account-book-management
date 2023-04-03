@@ -1,11 +1,11 @@
-package com.account.manage.accountmanage.adapter.`in`.filter
+package com.account.manage.accountmanage.user.adapter.`in`.filter
 
 import com.account.manage.accountmanage.common.adpater.out.error.DataNotFoundException
 import com.account.manage.accountmanage.common.adpater.out.error.InvalidRequestException
-import com.account.manage.accountmanage.common.adpater.out.error.UserErrorType
 import com.account.manage.accountmanage.user.adapter.out.persistence.UserRepository
 import com.account.manage.accountmanage.common.infra.auth.JwtProvider
 import com.account.manage.accountmanage.common.infra.auth.JwtValidator
+import com.account.manage.accountmanage.user.adapter.out.error.UserErrorType
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import javax.servlet.FilterChain

@@ -1,8 +1,0 @@
-# Base image
-FROM mysql:5.7
-
-# Set timezone
-ENV TZ=Asia/Seoul
-
-# Copy MySQL configuration file
-COPY my.cnf /etc/mysql/conf.d/my.cnf

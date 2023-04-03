@@ -1,10 +1,10 @@
 package com.account.manage.accountmanage.user.application.service
 
 import com.account.manage.accountmanage.common.adpater.out.error.InvalidRequestException
-import com.account.manage.accountmanage.common.adpater.out.error.UserErrorType
 import com.account.manage.accountmanage.common.infra.auth.CookieCreator
 import com.account.manage.accountmanage.common.infra.auth.JwtProvider
 import com.account.manage.accountmanage.common.infra.auth.PasswordEncrypt
+import com.account.manage.accountmanage.user.adapter.out.error.UserErrorType
 import com.account.manage.accountmanage.user.adapter.out.persistence.UserRepository
 import com.account.manage.accountmanage.user.application.port.`in`.UserJoinUseCase
 import com.account.manage.accountmanage.user.model.JoinCompletionDto
@@ -12,7 +12,6 @@ import com.account.manage.accountmanage.user.model.UserJoinDto
 import com.account.manage.accountmanage.user.model.UserRequest
 import com.account.manage.accountmanage.user.model.UserResponse
 import org.springframework.stereotype.Service
-import sun.jvm.hotspot.oops.CellTypeState.ref
 
 @Service
 class UserJoinService(

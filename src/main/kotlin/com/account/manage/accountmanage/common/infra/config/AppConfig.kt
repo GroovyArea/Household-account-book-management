@@ -1,8 +1,9 @@
 package com.account.manage.accountmanage.common.infra.config
 
-import com.account.manage.accountmanage.adapter.`in`.filter.AuthenticationFilter
+import com.account.manage.accountmanage.user.adapter.`in`.filter.AuthenticationFilter
 import com.account.manage.accountmanage.user.adapter.`in`.filter.LoginFilter
 import com.account.manage.accountmanage.common.adpater.out.error.ErrorHandlingFilter
+import com.account.manage.accountmanage.common.infra.auth.CookieCreator
 import com.account.manage.accountmanage.user.adapter.out.persistence.UserRepository
 import com.account.manage.accountmanage.common.infra.auth.JwtProvider
 import com.account.manage.accountmanage.common.infra.auth.JwtValidator
@@ -20,6 +21,7 @@ class AppConfig(
     private val jwtProvider: JwtProvider,
     private val jwtValidator: JwtValidator,
     private val userRepository: UserRepository,
+    private val cookieCreator: CookieCreator,
 ) {
 
     @Bean
@@ -34,7 +36,7 @@ class AppConfig(
     @Bean
     fun loginFilterRegistration(): FilterRegistrationBean<LoginFilter> {
         val registrationBean = FilterRegistrationBean<LoginFilter>()
-        registrationBean.filter = LoginFilter(userRepository, objectMapper)
+        registrationBean.filter = LoginFilter(userRepository, objectMapper, jwtProvider, cookieCreator)
         registrationBean.addUrlPatterns("/api/v1/sign-in")
         return registrationBean
     }
