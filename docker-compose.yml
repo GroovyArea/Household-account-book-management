@@ -1,22 +1,26 @@
 version: '3'
 services:
-  db:
-    build:
-      context: .
-      dockerfile: Dockerfile.mysql
-    container_name: mysql
+  mysql:
+    image: mysql:5.7
+    platform: linux/amd64
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: password
-    ports:
-      - "3306:3306"
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: my_password
+    volumes:
+      - ./mysql-data:/var/lib/mysql
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile.spring
-    container_name: app
-    restart: always
+    build: .
     ports:
       - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/my_database?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: my_user
+      SPRING_DATASOURCE_PASSWORD: my_password
+      SPRING_DATASOURCE_DRIVER-CLASS-NAME: com.mysql.cj.jdbc.Driver
+      SPRING_JPA_HIBERNATE_DDL-AUTO: create-drop
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL5Dialect
     depends_on:
-      - db
+      - mysql
