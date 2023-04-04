@@ -102,3 +102,24 @@ interface UserJoinUseCase {
 ```
 
 - DTO 파라미터도 동일하게 interface 로 추상화
+
+<br>
+
+### 인증 구현
+- Spring Security 프레임 워크 대신 Servlet Filter 로 구현
+  - JWT 기반 인증 filter
+  - Login Filter
+  - Error Handling Filter
+- 필터의 체이닝 순서를 **order** 로 구현
+  - 마지막에 동작하는 Error Handling Filter 는 Integer.MAX_VALUE
+
+```kotlin
+@Bean
+    fun errorHandlingFilterRegistration(): FilterRegistrationBean<ErrorHandlingFilter> {
+        val registrationBean = FilterRegistrationBean<ErrorHandlingFilter>()
+        registrationBean.filter = ErrorHandlingFilter()
+        registrationBean.addUrlPatterns("/api/v1/**")
+        registrationBean.order = Integer.MAX_VALUE
+        return registrationBean
+    }
+```
